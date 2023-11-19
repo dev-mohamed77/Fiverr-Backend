@@ -1,11 +1,11 @@
 import { IBaseUseCase } from '../../../application/core/base/base_usecase';
-import { LanguageEntity } from '../../entities/language.entity';
-import { IOccupationRepository } from '../../repositories/occupation.repository';
+import { ISkillsRepository } from '../../repositories/skilles.repository';
+import { SkillsEntity } from '../../entities/skills.entity';
 
-export class DeleteOneOccupationUseCase implements IBaseUseCase<boolean> {
-  constructor(private occupationRepository: IOccupationRepository) {}
+export class DeleteOneSkillsUseCase implements IBaseUseCase<boolean> {
+  constructor(private skillsRepository: ISkillsRepository) {}
 
-  execute(filter: Partial<LanguageEntity>): Promise<boolean> {
-    return this.occupationRepository.deleteOne(filter);
+  execute(filter: Partial<SkillsEntity>): Promise<boolean> {
+    return this.skillsRepository.deleteOne(filter);
   }
 }

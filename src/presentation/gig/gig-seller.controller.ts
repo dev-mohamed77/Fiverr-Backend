@@ -1,32 +1,41 @@
-import { Controller, Get, Param, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
 import { GigService } from './gig.service';
 import { JwtAuthGuard } from '../auth/jwt.guard';
 import { EndPoint } from '../../application/config/enum/endpoint';
 
-@Controller(`${EndPoint.id}/seller-gig`)
-export class SellerGigController {
+@Controller(`${EndPoint.id}/${EndPoint.gigsSellerPrefix}`)
+export class GigSellerController {
   constructor(private gigService: GigService) {}
 
-  @Get(EndPoint.id)
-  @UseGuards(JwtAuthGuard)
-  async getGigByIdController(@Param('id') id: string) {
-    const result = await this.gigService.getManyGigsService(
-      {},
-      {},
-      {
+  @Get()
+  async getGigsBySellerIdController(
+    @Param('id') sellerId: string,
+    @Query('page') page: string,
+    @Query('limit') limit: string,
+  ) {
+    const [result, length] = await this.gigService.getManyGigsService({
+      filter: {
+        seller: {
+          id: sellerId,
+        },
+      },
+      pagination: {
+        limit: parseInt(limit),
+        page: parseInt(page),
+      },
+
+      relation: {
         seller: true,
         images: true,
         subCategories: true,
         category: true,
       },
-      {
+
+      select: {
         seller: {
           id: true,
-          fullName: true,
-          user: {
-            id: true,
-            email: true,
-          },
+          displayName: true,
+          picture: true,
         },
         images: {
           id: true,
@@ -35,16 +44,18 @@ export class SellerGigController {
         category: {
           id: true,
           name: true,
+          src: true,
         },
         subCategories: {
           id: true,
           name: true,
         },
       },
-    );
+    });
 
     return {
       status: true,
+      length,
       result,
     };
   }

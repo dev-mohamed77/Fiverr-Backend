@@ -1,11 +1,12 @@
 import { IBaseUseCase } from '../../../application/core/base/base_usecase';
-import { IOccupationRepository } from '../../repositories/occupation.repository';
-import { OccupationEntity } from '../../entities/occupation.entity';
+import { ISkillsRepository } from '../../repositories/skilles.repository';
+import { SkillsEntity } from '../../entities/skills.entity';
+import { updateOptionBase } from 'src/application/core/model/option_base_model';
 
-export class UpdateOccupationUseCase implements IBaseUseCase<OccupationEntity> {
-  constructor(private occupationRepository: IOccupationRepository) {}
+export class UpdateSkillsUseCase implements IBaseUseCase<SkillsEntity> {
+  constructor(private skillsRepository: ISkillsRepository) {}
 
-  execute(id: string, params: OccupationEntity): Promise<OccupationEntity> {
-    return this.occupationRepository.update(id, params);
+  execute(option: updateOptionBase<SkillsEntity>): Promise<SkillsEntity> {
+    return this.skillsRepository.update(option);
   }
 }

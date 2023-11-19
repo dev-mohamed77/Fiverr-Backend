@@ -1,15 +1,12 @@
 import { IBaseUseCase } from '../../../application/core/base/base_usecase';
-import { UserEntity } from '../../entities/user.entity';
-import { IUserRepository } from '../../repositories/user.repository';
-import { FindOptionsRelations } from 'typeorm/find-options/FindOptionsRelations';
+import SellerEntity from '../../entities/seller.entity';
+import { ISellerRepository } from '../../repositories/seller.repository';
+import { FindOneByIdOptionBase } from 'src/application/core/model/option_base_model';
 
-export class GetUserByIdUseCase implements IBaseUseCase<UserEntity> {
-  constructor(private userRepository: IUserRepository) {}
+export class GetSellerByIdUseCase implements IBaseUseCase<SellerEntity> {
+  constructor(private sellerRepository: ISellerRepository) {}
 
-  execute(
-    id: string,
-    relation?: FindOptionsRelations<UserEntity>,
-  ): Promise<UserEntity> {
-    return this.userRepository.findById(id, relation);
+  execute(option: FindOneByIdOptionBase): Promise<SellerEntity> {
+    return this.sellerRepository.findById(option);
   }
 }

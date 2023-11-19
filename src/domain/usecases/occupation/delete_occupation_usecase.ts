@@ -1,10 +1,10 @@
 import { IBaseUseCase } from '../../../application/core/base/base_usecase';
-import { ILanguageRepository } from '../../repositories/language.repository';
+import { IOccupationRepository } from '../../repositories/occupation.repository';
 
-export class DeleteLanguageUseCase implements IBaseUseCase<boolean> {
-  constructor(private languageRepository: ILanguageRepository) {}
+export class DeleteOccupationUseCase implements IBaseUseCase<boolean> {
+  constructor(private occupationRepository: IOccupationRepository) {}
 
   execute(id: string): Promise<boolean> {
-    return this.languageRepository.delete(id);
+    return this.occupationRepository.delete(id);
   }
 }

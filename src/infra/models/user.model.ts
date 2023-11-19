@@ -1,21 +1,27 @@
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToMany, OneToOne } from 'typeorm';
 import { UserEntity } from '../../domain/entities/user.entity';
 import { Gender } from '../../application/config/enum/gender';
+import { Seller } from './seller.model';
+import SellerEntity from '../../domain/entities/seller.entity';
+import { Role } from '../../application/config/enum/roles';
+import { SubCategory } from './subCategory.model';
+import { SubCategoryEntity } from '../../domain/entities/subCategory.entity';
+import { CategoryEntity } from '../../domain/entities/category.entity';
+import { Category } from './category.model';
+import { BaseModel } from './base.model';
 
 @Entity()
-export class User extends UserEntity {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class User extends BaseModel implements UserEntity {
   @Column({
     type: 'varchar',
     length: 50,
   })
-  username: string;
+  name: string;
 
   @Column({
     type: 'varchar',
     length: 100,
+    unique: true,
   })
   email: string;
 
@@ -29,28 +35,43 @@ export class User extends UserEntity {
     type: 'enum',
     enum: Gender,
     default: Gender.Male,
-    nullable: true,
   })
   gender: Gender;
 
   @Column({ type: 'varchar', nullable: true, length: 50 })
   phone: string;
 
-  @Column({ type: 'int', length: 3, nullable: true })
+  @Column({ type: 'int', nullable: true })
   age: number;
 
-  @Column({ type: 'varchar', length: 50 })
+  @Column({ type: 'varchar', length: 50, nullable: true })
   country: string;
 
   @Column({ type: 'boolean', default: false })
   isSeller: boolean;
 
-  @OneToOne(type => )
-  seller:
+  @OneToOne(() => Seller, (seller) => seller.user)
+  @JoinColumn()
+  seller: SellerEntity;
 
-  @Column({ type: 'datetime', default: Date.now() })
-  createdAt: Date;
+  @OneToMany(() => Category, (category) => category.user)
+  categories: CategoryEntity[];
+
+  @OneToMany(() => SubCategory, (subCategory) => subCategory.user)
+  subCategories: SubCategoryEntity[];
+
+  @Column({ type: 'enum', enum: Role, default: Role.user })
+  roles: Role;
 
   @Column({ type: 'timestamp', nullable: true })
-  updatedAt: Date;
+  passwordChangedAt: Date;
+
+  @Column({ type: 'varchar', nullable: true })
+  passwordResetCode: string;
+
+  @Column({ type: 'timestamp', nullable: true })
+  passwordResetExpires: Date;
+
+  @Column({ type: 'boolean', nullable: true })
+  passwordResetVerified: boolean;
 }

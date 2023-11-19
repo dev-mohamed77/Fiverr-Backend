@@ -1,15 +1,14 @@
 import { IBaseUseCase } from '../../../application/core/base/base_usecase';
-import { FindOptionsRelations } from 'typeorm/find-options/FindOptionsRelations';
-import { LanguageEntity } from '../../entities/language.entity';
-import { ILanguageRepository } from '../../repositories/language.repository';
+import { IOccupationRepository } from '../../repositories/occupation.repository';
+import { OccupationEntity } from '../../entities/occupation.entity';
+import { FindOneByIdOptionBase } from 'src/application/core/model/option_base_model';
 
-export class GetLanguageByIdUseCase implements IBaseUseCase<LanguageEntity> {
-  constructor(private languageRepository: ILanguageRepository) {}
+export class GetOccupationByIdUseCase
+  implements IBaseUseCase<OccupationEntity>
+{
+  constructor(private occupationRepository: IOccupationRepository) {}
 
-  execute(
-    id: string,
-    relation?: FindOptionsRelations<LanguageEntity>,
-  ): Promise<LanguageEntity> {
-    return this.languageRepository.findById(id, relation);
+  execute(option: FindOneByIdOptionBase): Promise<OccupationEntity> {
+    return this.occupationRepository.findById(option);
   }
 }

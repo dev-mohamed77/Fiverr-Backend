@@ -1,11 +1,14 @@
 import { IBaseUseCase } from '../../../application/core/base/base_usecase';
-import { LanguageEntity } from '../../entities/language.entity';
-import { ILanguageRepository } from '../../repositories/language.repository';
+import { IOccupationRepository } from '../../repositories/occupation.repository';
+import { OccupationEntity } from '../../entities/occupation.entity';
+import { updateOptionBase } from 'src/application/core/model/option_base_model';
 
-export class UpdateLanguageUseCase implements IBaseUseCase<LanguageEntity> {
-  constructor(private languageRepository: ILanguageRepository) {}
+export class UpdateOccupationUseCase implements IBaseUseCase<OccupationEntity> {
+  constructor(private occupationRepository: IOccupationRepository) {}
 
-  execute(id: string, params: LanguageEntity): Promise<LanguageEntity> {
-    return this.languageRepository.update(id, params);
+  execute(
+    option: updateOptionBase<OccupationEntity>,
+  ): Promise<OccupationEntity> {
+    return this.occupationRepository.update(option);
   }
 }

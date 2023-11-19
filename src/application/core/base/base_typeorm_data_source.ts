@@ -1,55 +1,104 @@
 import { Injectable } from '@nestjs/common';
 import BaseEntity from './base_entity';
-import BaseRepository from './base_repository';
+import IBaseRepository from './base_repository';
 import { PaginationModel } from '../model/pagination_model';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { FindOptionsWhere } from 'typeorm/find-options/FindOptionsWhere';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
+import { FindOptionsRelations } from 'typeorm/find-options/FindOptionsRelations';
+import { FindOptionsSelect } from 'typeorm/find-options/FindOptionsSelect';
+import {
+  FindAllOptionTypOrmModel,
+  FindOneByIDOptionTypeOrmModel,
+  FindOneOptionTypeOrmModel,
+  UpdateOptionTypeOrmModel,
+} from '../model/options_typeorm_model';
+
+abstract class BaseTypeOrmRepository<
+  T extends BaseEntity,
+> extends IBaseRepository<T> {
+  abstract findByIds(ids: string[]): Promise<T[]>;
+}
 
 @Injectable()
-export class BasePostgresDataSource<T extends BaseEntity>
-  implements BaseRepository<T>
+export abstract class BaseTypeOrmDataSource<T extends BaseEntity>
+  implements BaseTypeOrmRepository<T>
 {
   constructor(public repository: Repository<T>) {}
 
   create(params: T): Promise<T> {
-    return this.repository.save(params);
+    return this.repository.save(params, {});
   }
 
-  findAll(pagination: PaginationModel): Promise<[T[], number]> {
+  findAll(option: FindAllOptionTypOrmModel<T>): Promise<[T[], number]> {
+    const page = (Math.abs(option.pagination.page) || 1) - 1;
+    const limit = Math.abs(option.pagination.limit) || 10;
+
+    const skip = page * limit;
+
     return this.repository.findAndCount({
-      take: pagination.limit,
-      skip: pagination.page,
+      where: option.filter,
+      take: limit,
+      skip: skip,
+      relations: option.relation,
+      select: option.select,
+      order: option.order,
     });
   }
 
-  async findById(id: string): Promise<T> {
+  async findById(option: FindOneByIDOptionTypeOrmModel<T>): Promise<T> {
     const result = await this.repository.findOne({
-      where: { id: id } as FindOptionsWhere<T>,
+      where: { id: option.id } as FindOptionsWhere<T>,
+      relations: option.relation,
+      select: option.select,
     });
 
     return result;
   }
 
-  findMany(filter: Partial<T>, pagination: PaginationModel): Promise<T[]> {
-    return this.repository.find({
-      where: filter as FindOptionsWhere<T>,
-      take: pagination.limit,
-      skip: pagination.page,
+  async findByIds(ids: string[]): Promise<T[]> {
+    const result = await this.repository.findBy({
+      id: In(ids),
+    } as FindOptionsWhere<T>);
+
+    return result;
+  }
+
+  findMany(option: FindAllOptionTypOrmModel<T>): Promise<[T[], number]> {
+    const page = (Math.abs(option.pagination.page) || 1) - 1;
+    const limit = Math.abs(option.pagination.limit) || 10;
+
+    const skip = page * limit;
+
+    return this.repository.findAndCount({
+      where: option.filter,
+      take: limit,
+      skip: skip,
+      relations: option.relation,
+      select: option.select,
+      order: option.order,
     });
   }
 
-  findOne(params: Partial<T>): Promise<T> {
-    return this.repository.findOne({ where: params as FindOptionsWhere<T> });
+  findOne(option: FindOneOptionTypeOrmModel<T>): Promise<T> {
+    return this.repository.findOne({
+      where: option.params as FindOptionsWhere<T>,
+      relations: option.relation,
+      select: option.select,
+    });
   }
 
-  async update(id: string, params: Partial<T>): Promise<T> {
-    const updateData = await this.repository.update(
-      id,
-      params as QueryDeepPartialEntity<T>,
+  async update(option: UpdateOptionTypeOrmModel<T>): Promise<T> {
+    await this.repository.update(
+      option.id,
+      option.params as QueryDeepPartialEntity<T>,
     );
 
-    return this.repository.findOneBy({ id: updateData.raw[0].id });
+    return this.repository.findOne({
+      where: { id: option.id as any },
+      relations: option.relation,
+      select: option.select,
+    });
   }
 
   async delete(id: any): Promise<boolean> {

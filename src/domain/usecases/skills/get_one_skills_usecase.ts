@@ -1,15 +1,12 @@
 import { IBaseUseCase } from '../../../application/core/base/base_usecase';
-import { FindOptionsRelations } from 'typeorm/find-options/FindOptionsRelations';
-import { OccupationEntity } from '../../entities/occupation.entity';
-import { IOccupationRepository } from '../../repositories/occupation.repository';
+import { ISkillsRepository } from '../../repositories/skilles.repository';
+import { SkillsEntity } from '../../entities/skills.entity';
+import { FindOneOptionBase } from 'src/application/core/model/option_base_model';
 
-export class GetOneOccupationUseCase implements IBaseUseCase<OccupationEntity> {
-  constructor(private occupationRepository: IOccupationRepository) {}
+export class GetOneSkillsUseCase implements IBaseUseCase<SkillsEntity> {
+  constructor(private skillsRepository: ISkillsRepository) {}
 
-  execute(
-    filter: Partial<OccupationEntity>,
-    relation?: FindOptionsRelations<OccupationEntity>,
-  ): Promise<OccupationEntity> {
-    return this.occupationRepository.findOne(filter, relation);
+  execute(option: FindOneOptionBase<SkillsEntity>): Promise<SkillsEntity> {
+    return this.skillsRepository.findOne(option);
   }
 }

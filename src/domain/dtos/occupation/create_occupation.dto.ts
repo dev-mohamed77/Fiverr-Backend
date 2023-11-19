@@ -1,17 +1,32 @@
-import { IsEnum, IsNotEmpty, IsString, IsUUID, Length } from 'class-validator';
-import { SkillLevel } from '../../../application/config/enum/skill_level';
+import {
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsUUID,
+  Length,
+} from 'class-validator';
+import { OccupationEnum } from '../../../application/config/enum/ocupation';
 
-export class CreateSkillDto {
+export class CreateOccupationDto {
   @IsNotEmpty()
   @IsString()
   @Length(2, 50)
-  readonly skill: string;
+  readonly specialization: string;
 
   @IsNotEmpty()
-  @IsEnum(SkillLevel)
-  readonly level: SkillLevel;
+  @IsEnum(OccupationEnum)
+  readonly occupation: OccupationEnum;
 
   @IsNotEmpty()
   @IsUUID('4')
-  seller: any;
+  seller: string;
+
+  @IsNotEmpty()
+  @IsString()
+  from: Date;
+
+  @IsNotEmpty()
+  @IsString()
+  to: Date;
 }

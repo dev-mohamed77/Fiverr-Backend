@@ -1,11 +1,11 @@
 import { IBaseUseCase } from '../../../application/core/base/base_usecase';
-import { IUserRepository } from '../../repositories/user.repository';
-import { UserEntity } from '../../entities/user.entity';
+import { ISellerRepository } from '../../repositories/seller.repository';
+import SellerEntity from '../../entities/seller.entity';
 
-export class DeleteOneUserUseCase implements IBaseUseCase<boolean> {
-  constructor(private userRepository: IUserRepository) {}
+export class DeleteOneSellerUseCase implements IBaseUseCase<boolean> {
+  constructor(private sellerRepository: ISellerRepository) {}
 
-  execute(filter: Partial<UserEntity>): Promise<boolean> {
-    return this.userRepository.deleteOne(filter);
+  execute(filter: Partial<SellerEntity>): Promise<boolean> {
+    return this.sellerRepository.deleteOne(filter);
   }
 }

@@ -1,11 +1,11 @@
 import { IBaseUseCase } from '../../../application/core/base/base_usecase';
-import { LanguageEntity } from '../../entities/language.entity';
-import { ILanguageRepository } from '../../repositories/language.repository';
+import { IOccupationRepository } from '../../repositories/occupation.repository';
+import { OccupationEntity } from '../../entities/occupation.entity';
 
-export class CreateLanguageUseCase implements IBaseUseCase<LanguageEntity> {
-  constructor(private languageRepository: ILanguageRepository) {}
+export class CreateOccupationUseCase implements IBaseUseCase<OccupationEntity> {
+  constructor(private occupationRepository: IOccupationRepository) {}
 
-  execute(params: LanguageEntity): Promise<LanguageEntity> {
-    return this.languageRepository.create(params);
+  execute(params: OccupationEntity): Promise<OccupationEntity> {
+    return this.occupationRepository.create(params);
   }
 }

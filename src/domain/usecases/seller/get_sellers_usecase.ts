@@ -1,16 +1,14 @@
 import { IBaseUseCase } from '../../../application/core/base/base_usecase';
-import { UserEntity } from '../../entities/user.entity';
-import { IUserRepository } from '../../repositories/user.repository';
-import { PaginationModel } from '../../../application/core/model/pagination_model';
-import { FindOptionsRelations } from 'typeorm/find-options/FindOptionsRelations';
+import { ISellerRepository } from '../../repositories/seller.repository';
+import SellerEntity from '../../entities/seller.entity';
+import { FindAllOptionBase } from 'src/application/core/model/option_base_model';
 
-export class GetUsersUseCase implements IBaseUseCase<[UserEntity[], number]> {
-  constructor(private userRepository: IUserRepository) {}
+export class GetSellersUseCase
+  implements IBaseUseCase<[SellerEntity[], number]>
+{
+  constructor(private sellerRepository: ISellerRepository) {}
 
-  execute(
-    pagination: PaginationModel,
-    relation?: FindOptionsRelations<UserEntity>,
-  ): Promise<[UserEntity[], number]> {
-    return this.userRepository.findAll(pagination, relation);
+  execute(option: FindAllOptionBase): Promise<[SellerEntity[], number]> {
+    return this.sellerRepository.findAll(option);
   }
 }

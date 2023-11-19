@@ -1,10 +1,10 @@
 import { IBaseUseCase } from '../../../application/core/base/base_usecase';
-import { ISellerRepository } from '../../repositories/seller.repository';
+import { ILanguageRepository } from '../../repositories/language.repository';
 
-export class DeleteSellerUseCase implements IBaseUseCase<boolean> {
-  constructor(private sellerRepository: ISellerRepository) {}
+export class DeleteLanguageUseCase implements IBaseUseCase<boolean> {
+  constructor(private languageRepository: ILanguageRepository) {}
 
   execute(id: string): Promise<boolean> {
-    return this.sellerRepository.delete(id);
+    return this.languageRepository.delete(id);
   }
 }

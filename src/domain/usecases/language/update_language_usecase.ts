@@ -1,11 +1,12 @@
+import { updateOptionBase } from 'src/application/core/model/option_base_model';
 import { IBaseUseCase } from '../../../application/core/base/base_usecase';
-import SellerEntity from '../../entities/seller.entity';
-import { ISellerRepository } from '../../repositories/seller.repository';
+import { LanguageEntity } from '../../entities/language.entity';
+import { ILanguageRepository } from '../../repositories/language.repository';
 
-export class UpdateSellerUseCase implements IBaseUseCase<SellerEntity> {
-  constructor(private sellerRepository: ISellerRepository) {}
+export class UpdateLanguageUseCase implements IBaseUseCase<LanguageEntity> {
+  constructor(private languageRepository: ILanguageRepository) {}
 
-  execute(id: string, params: SellerEntity): Promise<SellerEntity> {
-    return this.sellerRepository.update(id, params);
+  execute(option: updateOptionBase<LanguageEntity>): Promise<LanguageEntity> {
+    return this.languageRepository.update(option);
   }
 }

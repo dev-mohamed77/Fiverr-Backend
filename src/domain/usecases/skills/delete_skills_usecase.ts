@@ -1,10 +1,10 @@
 import { IBaseUseCase } from '../../../application/core/base/base_usecase';
-import { IOccupationRepository } from '../../repositories/occupation.repository';
+import { ISkillsRepository } from '../../repositories/skilles.repository';
 
-export class DeleteOccupationUseCase implements IBaseUseCase<boolean> {
-  constructor(private occupationRepository: IOccupationRepository) {}
+export class DeleteSkillsUseCase implements IBaseUseCase<boolean> {
+  constructor(private skillsRepository: ISkillsRepository) {}
 
   execute(id: string): Promise<boolean> {
-    return this.occupationRepository.delete(id);
+    return this.skillsRepository.delete(id);
   }
 }

@@ -1,19 +1,14 @@
 import { IBaseUseCase } from '../../../application/core/base/base_usecase';
-import { PaginationModel } from '../../../application/core/model/pagination_model';
-import { FindOptionsRelations } from 'typeorm/find-options/FindOptionsRelations';
-import { IOccupationRepository } from '../../repositories/occupation.repository';
-import { OccupationEntity } from '../../entities/occupation.entity';
+import { ISkillsRepository } from '../../repositories/skilles.repository';
+import { SkillsEntity } from '../../entities/skills.entity';
+import { FindAllOptionBase } from 'src/application/core/model/option_base_model';
 
-export class GetManyOccupationUseCase
-  implements IBaseUseCase<OccupationEntity[]>
+export class GetManySkillsUseCase
+  implements IBaseUseCase<[SkillsEntity[], number]>
 {
-  constructor(private occupationRepository: IOccupationRepository) {}
+  constructor(private skillsRepository: ISkillsRepository) {}
 
-  execute(
-    filter: Partial<OccupationEntity>,
-    pagination: PaginationModel,
-    relation: FindOptionsRelations<OccupationEntity>,
-  ): Promise<OccupationEntity[]> {
-    return this.occupationRepository.findMany(filter, pagination, relation);
+  execute(option: FindAllOptionBase): Promise<[SkillsEntity[], number]> {
+    return this.skillsRepository.findMany(option);
   }
 }

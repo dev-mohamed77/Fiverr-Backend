@@ -1,11 +1,11 @@
 import { IBaseUseCase } from '../../../application/core/base/base_usecase';
-import { UserEntity } from '../../entities/user.entity';
-import { IUserRepository } from '../../repositories/user.repository';
+import { ISellerRepository } from '../../repositories/seller.repository';
+import SellerEntity from '../../entities/seller.entity';
 
-export class CreateUserUseCase implements IBaseUseCase<UserEntity> {
-  constructor(private userRepository: IUserRepository) {}
+export class CreateSellerUseCase implements IBaseUseCase<SellerEntity> {
+  constructor(private sellerRepository: ISellerRepository) {}
 
-  execute(params: UserEntity): Promise<UserEntity> {
-    return this.userRepository.create(params);
+  execute(params: SellerEntity): Promise<SellerEntity> {
+    return this.sellerRepository.create(params);
   }
 }

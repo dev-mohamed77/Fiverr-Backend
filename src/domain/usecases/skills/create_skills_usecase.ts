@@ -1,11 +1,11 @@
 import { IBaseUseCase } from '../../../application/core/base/base_usecase';
-import { IOccupationRepository } from '../../repositories/occupation.repository';
-import { OccupationEntity } from '../../entities/occupation.entity';
+import { ISkillsRepository } from '../../repositories/skilles.repository';
+import { SkillsEntity } from '../../entities/skills.entity';
 
-export class CreateOccupationUseCase implements IBaseUseCase<OccupationEntity> {
-  constructor(private occupationRepository: IOccupationRepository) {}
+export class CreateSkillsUseCase implements IBaseUseCase<SkillsEntity> {
+  constructor(private skillsRepository: ISkillsRepository) {}
 
-  execute(params: OccupationEntity): Promise<OccupationEntity> {
-    return this.occupationRepository.create(params);
+  execute(params: SkillsEntity): Promise<SkillsEntity> {
+    return this.skillsRepository.create(params);
   }
 }

@@ -1,17 +1,14 @@
 import { IBaseUseCase } from '../../../application/core/base/base_usecase';
-import { PaginationModel } from '../../../application/core/model/pagination_model';
-import { FindOptionsRelations } from 'typeorm/find-options/FindOptionsRelations';
-import { LanguageEntity } from '../../entities/language.entity';
-import { ILanguageRepository } from '../../repositories/language.repository';
+import { IOccupationRepository } from '../../repositories/occupation.repository';
+import { OccupationEntity } from '../../entities/occupation.entity';
+import { FindAllOptionBase } from 'src/application/core/model/option_base_model';
 
-export class GetManyLanguageUseCase implements IBaseUseCase<LanguageEntity[]> {
-  constructor(private languageRepository: ILanguageRepository) {}
+export class GetManyOccupationUseCase
+  implements IBaseUseCase<[OccupationEntity[], number]>
+{
+  constructor(private occupationRepository: IOccupationRepository) {}
 
-  execute(
-    filter: Partial<LanguageEntity>,
-    pagination: PaginationModel,
-    relation: FindOptionsRelations<LanguageEntity>,
-  ): Promise<LanguageEntity[]> {
-    return this.languageRepository.findMany(filter, pagination, relation);
+  execute(option: FindAllOptionBase): Promise<[OccupationEntity[], number]> {
+    return this.occupationRepository.findMany(option);
   }
 }

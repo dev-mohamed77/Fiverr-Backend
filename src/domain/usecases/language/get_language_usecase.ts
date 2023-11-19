@@ -1,18 +1,14 @@
+import { FindAllOptionBase } from 'src/application/core/model/option_base_model';
 import { IBaseUseCase } from '../../../application/core/base/base_usecase';
-import { PaginationModel } from '../../../application/core/model/pagination_model';
-import { FindOptionsRelations } from 'typeorm/find-options/FindOptionsRelations';
-import { ISellerRepository } from '../../repositories/seller.repository';
-import SellerEntity from '../../entities/seller.entity';
+import { LanguageEntity } from '../../entities/language.entity';
+import { ILanguageRepository } from '../../repositories/language.repository';
 
-export class GetSellersUseCase
-  implements IBaseUseCase<[SellerEntity[], number]>
+export class GetLanguagesUseCase
+  implements IBaseUseCase<[LanguageEntity[], number]>
 {
-  constructor(private sellerRepository: ISellerRepository) {}
+  constructor(private languageRepository: ILanguageRepository) {}
 
-  execute(
-    pagination: PaginationModel,
-    relation?: FindOptionsRelations<SellerEntity>,
-  ): Promise<[SellerEntity[], number]> {
-    return this.sellerRepository.findAll(pagination, relation);
+  execute(option: FindAllOptionBase): Promise<[LanguageEntity[], number]> {
+    return this.languageRepository.findAll(option);
   }
 }

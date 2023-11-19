@@ -1,15 +1,12 @@
 import { IBaseUseCase } from '../../../application/core/base/base_usecase';
-import { FindOptionsRelations } from 'typeorm/find-options/FindOptionsRelations';
-import SellerEntity from '../../entities/seller.entity';
-import { ISellerRepository } from '../../repositories/seller.repository';
+import { LanguageEntity } from '../../entities/language.entity';
+import { ILanguageRepository } from '../../repositories/language.repository';
+import { FindOneByIdOptionBase } from 'src/application/core/model/option_base_model';
 
-export class GetSellerByIdUseCase implements IBaseUseCase<SellerEntity> {
-  constructor(private sellerRepository: ISellerRepository) {}
+export class GetLanguageByIdUseCase implements IBaseUseCase<LanguageEntity> {
+  constructor(private languageRepository: ILanguageRepository) {}
 
-  execute(
-    id: string,
-    relation?: FindOptionsRelations<SellerEntity>,
-  ): Promise<SellerEntity> {
-    return this.sellerRepository.findById(id, relation);
+  execute(option: FindOneByIdOptionBase): Promise<LanguageEntity> {
+    return this.languageRepository.findById(option);
   }
 }
