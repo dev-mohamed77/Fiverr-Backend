@@ -16,6 +16,7 @@ import { GigImagesModule } from './presentation/gig-images/gig-images.module';
 import { FavoriteModule } from './presentation/favorite/favorite.module';
 import { ReviewModule } from './presentation/review/review.module';
 import { OrderModule } from './presentation/order/order.module';
+import { ConversationModule } from './presentation/conversation/conversation.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { OrderModule } from './presentation/order/order.module';
     FavoriteModule,
     ReviewModule,
     OrderModule,
+    ConversationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
