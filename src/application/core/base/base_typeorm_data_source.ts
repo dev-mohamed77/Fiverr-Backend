@@ -14,7 +14,7 @@ import {
   UpdateOptionTypeOrmModel,
 } from '../model/options_typeorm_model';
 
-abstract class BaseTypeOrmRepository<
+export abstract class BaseTypeOrmRepository<
   T extends BaseEntity,
 > extends IBaseRepository<T> {
   abstract findByIds(ids: string[]): Promise<T[]>;

@@ -28,8 +28,29 @@ export class ConversationService {
     private deleteOneConversationUseCase: DeleteOneConversationUseCase,
   ) {}
 
-  createConversationService(param: ConversationEntity) {
-    return this.createConversationUseCase.execute(param);
+  async createConversationService(param: ConversationEntity) {
+    const conversation = await this.createConversationUseCase.execute(param);
+
+    return this.getConversationByIdService({
+      id: conversation.id,
+      relation: {
+        seller: true,
+        user: true,
+      },
+      select: {
+        seller: {
+          id: true,
+          fullName: true,
+          displayName: true,
+          picture: true,
+        },
+        user: {
+          id: true,
+          name: true,
+          email: true,
+        },
+      },
+    });
   }
 
   getConversationsService(
@@ -56,14 +77,18 @@ export class ConversationService {
 
   async getOneConversationService(
     option: FindOneOptionTypeOrmModel<ConversationEntity>,
+    { isUseThrow = true },
   ) {
     const result = await this.getOneConversationUseCase.execute(option);
+    if (isUseThrow) {
+      if (!result) {
+        throw new BadRequestException(`Conversation is not exist`);
+      }
 
-    if (!result) {
-      throw new BadRequestException(`Conversation is not exist`);
+      return result;
+    } else {
+      return result;
     }
-
-    return result;
   }
 
   getManyConversationsService(

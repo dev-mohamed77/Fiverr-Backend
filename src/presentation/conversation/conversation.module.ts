@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConversationController } from './conversation.controller';
 import { ConversationService } from './conversation.service';
-import { Conversation } from 'src/infra/models/conversation';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConversationRepositoryImp } from 'src/infra/repositories/conversation.repository';
 import { IConversationRepository } from 'src/domain/repositories/conversation.repository';
@@ -15,14 +14,17 @@ import { DeleteOneConversationUseCase } from 'src/domain/usecases/conversation/d
 import { DeleteConversationUseCase } from 'src/domain/usecases/conversation/delete_conversation_usecase';
 import { ConversationUserController } from './conversation_user.controller';
 import { ConversationSellerController } from './conversation_seller.controller';
+import { Conversation } from 'src/infra/models/conversation.model';
+import { UserModule } from '../user/user.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Conversation])],
+  imports: [TypeOrmModule.forFeature([Conversation]), UserModule],
   controllers: [
     ConversationController,
     ConversationUserController,
     ConversationSellerController,
   ],
+  exports: [ConversationService],
   providers: [
     ConversationService,
     {

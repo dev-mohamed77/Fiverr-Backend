@@ -18,6 +18,7 @@ import { RoleGuard } from '../auth/role.guard';
 import { Roles } from '../auth/role.decorator';
 import { Role } from 'src/application/config/enum/roles';
 import { EndPoint } from 'src/application/config/enum/endpoint';
+import { GetConversationByUserIdAndSellerIdDto } from 'src/domain/dtos/conversation/get_conversation_by_seller_id_and_user_id.dto';
 
 @Controller('conversation')
 export class ConversationController {
@@ -86,6 +87,50 @@ export class ConversationController {
       result,
     };
   }
+
+  @Get('seller-user')
+  @UseGuards(JwtAuthGuard)
+  async getConversationByUserIdAndSellerIdController(
+    @Body() conversation: GetConversationByUserIdAndSellerIdDto,
+  ) {
+    const result = await this.conversationService.getOneConversationService(
+      {
+        params: {
+          seller: {
+            id: conversation.seller,
+          },
+          user: {
+            id: conversation.user,
+          },
+        },
+
+        relation: {
+          seller: true,
+          user: true,
+        },
+        select: {
+          seller: {
+            id: true,
+            fullName: true,
+            displayName: true,
+            picture: true,
+          },
+          user: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
+      },
+      { isUseThrow: false },
+    );
+
+    return {
+      status: true,
+      result,
+    };
+  }
+
   @Get(EndPoint.id)
   @UseGuards(JwtAuthGuard)
   async getConversationByIdController(@Param('id', ParseUUIDPipe) id: string) {
@@ -119,12 +164,14 @@ export class ConversationController {
   @Delete(EndPoint.id)
   @Roles(Role.admin)
   @UseGuards(JwtAuthGuard, RoleGuard)
-  deleteConversationByIdController(@Param('id', ParseUUIDPipe) id: string) {
-    const result = this.conversationService.deleteConversationService(id);
+  async deleteConversationByIdController(
+    @Param('id', ParseUUIDPipe) id: string,
+  ) {
+    await this.conversationService.deleteConversationService(id);
 
     return {
       status: true,
-      result,
+      result: 'Conversation deleted successfully',
     };
   }
 }

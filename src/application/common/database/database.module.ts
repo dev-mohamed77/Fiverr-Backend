@@ -16,6 +16,12 @@ import { ConfigService } from '@nestjs/config';
         synchronize: true,
         logging: true,
         logger: 'advanced-console',
+        extra: {
+          ssl: {
+            rejectUnauthorized: false,
+          },
+        },
+        options: { encrypt: false },
       }),
       inject: [ConfigService],
     }),

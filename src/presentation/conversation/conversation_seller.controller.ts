@@ -10,7 +10,7 @@ import { ConversationService } from './conversation.service';
 import { JwtAuthGuard } from '../auth/jwt.guard';
 import { EndPoint } from 'src/application/config/enum/endpoint';
 
-@Controller(`${EndPoint.id}conversation-seller`)
+@Controller(`${EndPoint.id}/conversation-seller`)
 export class ConversationSellerController {
   constructor(private conversationService: ConversationService) {}
 

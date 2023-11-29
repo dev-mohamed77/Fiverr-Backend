@@ -5,6 +5,7 @@ import SellerEntity from './seller.entity';
 export class ConversationEntity extends BaseEntity {
   user?: UserEntity;
   seller?: SellerEntity;
+  lastMessage?: string;
 
   constructor(partial: Partial<ConversationEntity>) {
     super();

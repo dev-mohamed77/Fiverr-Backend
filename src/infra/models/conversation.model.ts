@@ -1,4 +1,4 @@
-import { Entity, ManyToOne } from 'typeorm';
+import { Column, Entity, ManyToOne } from 'typeorm';
 import { UserEntity } from '../../domain/entities/user.entity';
 import { User } from './user.model';
 import { BaseModel } from './base.model';
@@ -13,4 +13,7 @@ export class Conversation extends BaseModel implements ConversationEntity {
 
   @ManyToOne(() => Seller, { onDelete: 'CASCADE' })
   seller: SellerEntity;
+
+  @Column({ type: 'text', nullable: true })
+  lastMessage: string;
 }

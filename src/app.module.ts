@@ -17,6 +17,7 @@ import { FavoriteModule } from './presentation/favorite/favorite.module';
 import { ReviewModule } from './presentation/review/review.module';
 import { OrderModule } from './presentation/order/order.module';
 import { ConversationModule } from './presentation/conversation/conversation.module';
+import { MessageModule } from './presentation/message/message.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { ConversationModule } from './presentation/conversation/conversation.mod
     ReviewModule,
     OrderModule,
     ConversationModule,
+    MessageModule,
   ],
   controllers: [AppController],
   providers: [AppService],
