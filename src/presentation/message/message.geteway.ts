@@ -32,24 +32,9 @@ export class MessageGeteway
 
   private readonly onlineUsers: Map<string, string> = new Map();
 
-  handleConnection(client: Socket, ...args: any[]) {
-    // let userId = client.handshake.query.userId;
-    // console.log(`connect ==============> ${client.id}`);
-    // client.on('onlineUsers', (_) => {
-    //   console.log('a user ' + userId + ' connected');
-    //   this.onlineUsers[client.id] = userId;
-    // });
-    // // send all active users to new user
-    // client.emit('get-onlineUsers', this.onlineUsers);
-  }
+  handleConnection(client: Socket, ...args: any[]) {}
 
-  handleDisconnect(client: Socket) {
-    console.log(`Disconnect ==============> ${client.id}`);
-    // delete this.onlineUsers[client.id];
-
-    // // send all active users to new user
-    // client.emit('get-onlineUsers', this.onlineUsers);
-  }
+  handleDisconnect(client: Socket) {}
 
   @SubscribeMessage('joinRoom')
   async handleJoinRoom(
@@ -65,12 +50,6 @@ export class MessageGeteway
     @MessageBody() createMessageDto: CreateMessageDto,
   ) {
     // add message to message table in database
-
-    console.log(`Seller ==========>>>> ${createMessageDto.seller}`);
-    console.log(`User ==========>>>> ${createMessageDto.user}`);
-    console.log(`sender ==========>>>> ${createMessageDto.sender}`);
-    console.log(`message ==========>>>> ${createMessageDto.message}`);
-    console.log(`conversation ==========>>>> ${createMessageDto.conversation}`);
 
     const messageEntity = new MessageEntity({
       message: createMessageDto.message,
@@ -89,12 +68,6 @@ export class MessageGeteway
     const message = await this.messageService.createMessageService(
       messageEntity,
     );
-
-    console.log(`Seller ==========>>>> ${message.seller}`);
-    console.log(`User ==========>>>> ${message.user}`);
-    console.log(`sender ==========>>>> ${message.sender}`);
-    console.log(`message ==========>>>> ${message.message}`);
-    console.log(`conversation ==========>>>> ${message.conversation}`);
 
     // event send message to web socket server
     client
