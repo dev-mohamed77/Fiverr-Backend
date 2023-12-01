@@ -15,7 +15,6 @@ import { ConversationService } from '../conversation/conversation.service';
 import { CreateRoomDto } from 'src/domain/dtos/message/create_rome.dto';
 
 @WebSocketGateway({
-  port: process.env.PORT,
   cors: {
     origin: '*',
   },
