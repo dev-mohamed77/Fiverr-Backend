@@ -14,7 +14,12 @@ import { Server, Socket } from 'socket.io';
 import { ConversationService } from '../conversation/conversation.service';
 import { CreateRoomDto } from 'src/domain/dtos/message/create_rome.dto';
 
-@WebSocketGateway(Number(process.env.PORT))
+@WebSocketGateway({
+  port: process.env.PORT,
+  cors: {
+    origin: '*',
+  },
+})
 export class MessageGeteway
   implements OnGatewayConnection, OnGatewayDisconnect
 {
