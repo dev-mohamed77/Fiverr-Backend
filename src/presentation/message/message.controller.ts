@@ -5,22 +5,13 @@ import {
   Delete,
   Get,
   Param,
-  ParseEnumPipe,
   ParseUUIDPipe,
-  Post,
   Query,
-  Req,
   UseGuards,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt.guard';
-import { ConversationEntity } from 'src/domain/entities/conversation.entity';
-import { CreateConversationDto } from 'src/domain/dtos/conversation/create_conversation.dto';
-import { RoleGuard } from '../auth/role.guard';
-import { Roles } from '../auth/role.decorator';
-import { Role } from 'src/application/config/enum/roles';
 import { EndPoint } from 'src/application/config/enum/endpoint';
 import { MessageService } from './message.service';
-import { Sender } from 'src/application/config/enum/sender';
 import { DeleteMessageDto } from 'src/domain/dtos/message/delete_message.dto';
 
 @Controller('messages')
