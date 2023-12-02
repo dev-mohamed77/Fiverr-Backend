@@ -44,6 +44,7 @@ This project was implemented by Nest Js with the PostgreSQL database
 ## Features:
   - User authentication using JWT and authorization.
   - API features added to GET methods to get ordered data.
+  - It contains a chat between user and the seller
 
 ## Contact me:
   - Email: developer.mohamed55@gmail.com
@@ -61,6 +62,8 @@ This project was implemented by Nest Js with the PostgreSQL database
   - reflect-metadata 
   - rxjs 
   - typeorm
+  - nestjs/platform-socket.io
+  - nestjs/websockets
 
 ## Models&DB
   - Diagram link: https://dbdiagram.io/d/655a5d6c3be14957874c9d0b
