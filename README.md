@@ -67,9 +67,8 @@ This project was implemented by Nest Js with the PostgreSQL database
 
 ## Models&DB
   - Diagram link: https://dbdiagram.io/d/655a5d6c3be14957874c9d0b
-![Untitled (1)](https://github.com/dev-mohamed77/Fiverr-Backend/assets/69175319/a100de9c-eda5-4c28-b8d0-c2559a4e5419)
+  ![Untitled (2)](https://github.com/dev-mohamed77/Fiverr-Backend/assets/69175319/ea7334dc-d02c-4cf5-b64f-edaa0f95d178)
 
-  
   
 
 
